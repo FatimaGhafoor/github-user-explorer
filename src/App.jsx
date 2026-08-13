@@ -1,122 +1,155 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import { SearchBar } from "./components/SearchBar";
+import { useGitHubAPI } from "./hooks/useGitHubAPI";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [searchedUser, setSearchedUser] = useState(null);
+  const { data: userData, loading, error, fetchData } = useGitHubAPI();
+
+  const handleSearch = async (username) => {
+    console.log(`Searching for: ${username}`);
+    await fetchData(`/users/${username}`);
+    setSearchedUser(username);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>GitHub User Explorer</h1>
+        <p>
+          Search for any GitHub user to explore their profile details and
+          repositories
+        </p>
+      </header>
 
-      <div className="ticks"></div>
+      <SearchBar onSearch={handleSearch} isLoading={loading} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <main className="app-main">
+        {loading && (
+          <div className="loading-state">
+            <div className="spinner"></div>
+            <p>Searching for {searchedUser}...</p>
+          </div>
+        )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {error && !loading && (
+          <div className="error-state">
+            <p className="error-message">{error}</p>
+            <p className="error-hint">
+              Please try again or enter a different username
+            </p>
+          </div>
+        )}
+
+        {userData && !loading && (
+          <div className="user-card">
+            <div className="user-avatar-container">
+              <img
+                src={userData.avatar_url}
+                alt={userData.login}
+                className="user-avatar"
+              />
+            </div>
+
+            <div className="user-info">
+              <h2 className="user-name">{userData.name || userData.login}</h2>
+
+              {userData.bio && <p className="user-bio">{userData.bio}</p>}
+
+              {userData.location && (
+                <p className="user-location">📍 {userData.location}</p>
+              )}
+
+              {userData.blog && (
+                <a
+                  href={userData.blog}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="user-link"
+                >
+                  {userData.blog}
+                </a>
+              )}
+            </div>
+
+            <div className="user-stats">
+              <div className="stat">
+                <span className="stat-icon">🔄</span>
+                <span className="stat-label">Followers</span>
+                <span className="stat-value">{userData.followers}</span>
+              </div>
+
+              <div className="stat">
+                <span className="stat-icon">🔄</span>
+                <span className="stat-label">Following</span>
+                <span className="stat-value">{userData.following}</span>
+              </div>
+
+              <div className="stat">
+                <span className="stat-icon">🔄</span>
+                <span className="stat-label">Public Repos</span>
+                <span className="stat-value">{userData.public_repos}</span>
+              </div>
+
+              <div className="stat">
+                <span className="stat-icon">🔄</span>
+                <span className="stat-label">Public Gists</span>
+                <span className="stat-value">{userData.public_gists}</span>
+              </div>
+            </div>
+
+            <div className="user-actions">
+              <a
+                href={userData.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+              >
+                View GitHub Profile →
+              </a>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  setSearchedUser(null);
+                }}
+              >
+                New Search
+              </button>
+            </div>
+
+            <div className="user-meta">
+              <p>
+                <strong>Account Created:</strong>{" "}
+                {new Date(userData.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+              {userData.updated_at && (
+                <p>
+                  <strong>Last Updated:</strong>{" "}
+                  {new Date(userData.updated_at).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {!userData && !loading && !error && (
+          <div className="empty-state">
+            <p className="empty-icon">🙋</p>
+            <p className="empty-text">Enter a GitHub username to get started</p>
+          </div>
+        )}
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
