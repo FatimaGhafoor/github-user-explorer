@@ -5,10 +5,7 @@ import "../styles/HomePage.css";
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-
   const handleSearch = (username) => {
-    setLoading(true);
     navigate(`/users/${username}`);
   };
 
