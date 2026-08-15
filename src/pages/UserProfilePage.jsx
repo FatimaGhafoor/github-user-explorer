@@ -42,4 +42,41 @@ export const UserProfilePage = () => {
       </div>
     );
   }
+
+  return (
+    <div className="profile-container">
+      <div className="profile-header">
+        <button className="btn-back" onClick={() => navigate("/")}>
+          ← Back to Search
+        </button>
+      </div>
+      <div className="user-card">
+        <div className="user-avatar-container">
+          <img
+            src={userData.avatar_url}
+            alt={userData.login}
+            className="user-avatar"
+          />
+        </div>
+      </div>
+      <div className="user-info">
+        <h1>{userData.name || userData.login}</h1>
+        {userData.bio && <p className="user-bio">{userData.bio} </p>}
+        {userData.location && (
+          <p className="user-location">📍 {userData.location}</p>
+        )}
+        {userData.blog && (
+          <a
+            href={userData.blog}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="user-link"
+          >
+            🔗 {userData.blog}
+          </a>
+        )}
+        {userData.company && <p className="user-company">{userData.company}</p>}
+      </div>
+    </div>
+  );
 };
