@@ -6,11 +6,11 @@ import "../styles/UserProfilePage.css";
 export const UserProfilePage = () => {
   const { username } = useParams();
   const navigate = useNavigate();
-  const { data: userData, loading, error, fetchingData } = useGitHubAPI();
+  const { data: userData, loading, error, fetchData } = useGitHubAPI();
 
   useEffect(() => {
     fetchData(`/users/${username}`);
-  }, [username, fetchingData]);
+  }, [username]);
 
   if (loading) {
     return (
@@ -101,7 +101,7 @@ export const UserProfilePage = () => {
         <div className="user-meta">
           <p>
             <strong>Account Created:</strong>
-            {new Data(userData.created_at).toLocaleDateString("en-US", {
+            {new Date(userData.created_at).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
