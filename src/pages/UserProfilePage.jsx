@@ -58,24 +58,66 @@ export const UserProfilePage = () => {
             className="user-avatar"
           />
         </div>
-      </div>
-      <div className="user-info">
-        <h1>{userData.name || userData.login}</h1>
-        {userData.bio && <p className="user-bio">{userData.bio} </p>}
-        {userData.location && (
-          <p className="user-location">📍 {userData.location}</p>
-        )}
-        {userData.blog && (
+        <div className="user-info">
+          <h1>{userData.name || userData.login}</h1>
+          {userData.bio && <p className="user-bio">{userData.bio} </p>}
+          {userData.location && (
+            <p className="user-location">📍 {userData.location}</p>
+          )}
+          {userData.blog && (
+            <a
+              href={userData.blog}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="user-link"
+            >
+              🔗 {userData.blog}
+            </a>
+          )}
+          {userData.company && (
+            <p className="user-company">{userData.company}</p>
+          )}
+        </div>
+        <div className="user-stats">
+          <div className="stat">
+            <span className="stat-icon">icon</span>
+            <span className="stat-label">Followers</span>
+            <span className="stat-value">{userData.followers}</span>
+          </div>
+        </div>
+        <div className="user-actions">
           <a
-            href={userData.blog}
+            href={userData.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="user-link"
+            className="btn btn-primary"
           >
-            🔗 {userData.blog}
+            View GitHub Profile →
           </a>
-        )}
-        {userData.company && <p className="user-company">{userData.company}</p>}
+          <button className="btn btn-secondary" onClick={() => navigate("/")}>
+            New Search
+          </button>
+        </div>
+        <div className="user-meta">
+          <p>
+            <strong>Account Created:</strong>
+            {new Data(userData.created_at).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+          {userData.updated_at && (
+            <p>
+              <strong>Last Updated:</strong>
+              {new Date(userData.updated_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
