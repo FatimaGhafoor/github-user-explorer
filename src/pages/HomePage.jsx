@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 import "../styles/HomePage.css";
@@ -22,7 +21,7 @@ export const HomePage = () => {
       </header>
 
       <div className="home-search-section">
-        <SearchBar onSearch={handleSearch} isLoading={loading} />
+        <SearchBar onSearch={handleSearch} />
       </div>
 
       <div className="home-info">
