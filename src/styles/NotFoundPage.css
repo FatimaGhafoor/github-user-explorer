@@ -1,0 +1,118 @@
+.not-found-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.not-found-content {
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  padding: 60px 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-out;
+  max-width: 500px;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.not-found-code {
+  font-size: 120px;
+  font-weight: 700;
+  color: #0366d6;
+  margin-bottom: 16px;
+  letter-spacing: -5px;
+  line-height: 1;
+}
+.not-found-title {
+  font-size: 32px;
+  color: #24292e;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.not-found-message {
+  font-size: 16px;
+  color: #6a737d;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.btn {
+  padding: 12px 32px;
+  background: #0366d6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+  font-family: inherit;
+}
+.btn-primary:hover {
+  background: #0256b8;
+  box-shadow: 0 4px 12px rgba(3, 102, 214, 0.3);
+  transform: translateY(-2px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .not-found-container {
+    min-height: auto;
+    padding: 12px;
+  }
+  .not-found-content {
+    padding: 40px 24px;
+  }
+  .not-found-code {
+    font-size: 80px;
+  }
+  .not-found-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .not-found-message {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .btn {
+    padding: 11px 24px;
+    font-size: 13px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .not-found-content {
+    padding: 32px 20px;
+  }
+
+  .not-found-code {
+    font-size: 64px;
+    margin-bottom: 12px;
+  }
+
+  .not-found-title {
+    font-size: 20px;
+  }
+
+  .not-found-message {
+    font-size: 13px;
+  }
+}
