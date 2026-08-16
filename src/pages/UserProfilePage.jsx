@@ -10,7 +10,7 @@ export const UserProfilePage = () => {
 
   useEffect(() => {
     fetchData(`/users/${username}`);
-  }, [username]);
+  }, [username, fetchData]);
 
   if (loading) {
     return (
