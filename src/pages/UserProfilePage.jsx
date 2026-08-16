@@ -100,7 +100,7 @@ export const UserProfilePage = () => {
         </div>
         <div className="user-meta">
           <p>
-            <strong>Account Created:</strong>
+            <strong>Account Created: </strong>
             {new Date(userData.created_at).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -109,7 +109,7 @@ export const UserProfilePage = () => {
           </p>
           {userData.updated_at && (
             <p>
-              <strong>Last Updated:</strong>
+              <strong>Last Updated: </strong>
               {new Date(userData.updated_at).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
