@@ -10,7 +10,6 @@ export const useGitHubAPI = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const fetchData = useCallback(async (endpoint, skipCache = false) => {
     if (cache[endpoint] && !skipCache) {
       console.log(`Cache hit for ${endpoint}`);
@@ -34,10 +33,12 @@ export const useGitHubAPI = () => {
     } catch (err) {
       const errorMessage =
         err.response?.status === 404
-          ? "User or repo not found"
+          ? "❌ User not found (404)"
           : err.response?.status === 403
-            ? "Rate limit exceeded"
-            : err.message;
+            ? "⚠️ Rate limit exceeded - try again later"
+            : err.response?.status === 401
+              ? "🔐 Invalid token"
+              : err.message || "Network error";
 
       setError(errorMessage);
       setData(null);
