@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./SearchBar.css";
 
-export const SearchBar = ({ onSearch }) => {
+export const SearchBar = ({ onSearch, isLoading }) => {
   const [input, setInput] = useState("");
 
   const handleSearch = (e) => {
@@ -25,8 +25,8 @@ export const SearchBar = ({ onSearch }) => {
         onChange={(e) => setInput(e.target.value)}
         className="search-input"
       />
-      <button type="submit" className="search-btn">
-        Search
+      <button type="submit" className="search-btn" disabled={isLoading}>
+        {isLoading ? "Search..." : "Search"}
       </button>
     </form>
   );
