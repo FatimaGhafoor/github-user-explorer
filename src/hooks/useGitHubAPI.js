@@ -11,11 +11,23 @@ export const useGitHubAPI = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const fetchData = useCallback(async (endpoint, skipCache = false) => {
-    if (cache[endpoint] && !skipCache) {
-      console.log(`Cache hit for ${endpoint}`);
-      setData(cache[endpoint]);
-      setError(null);
-      return cache[endpoint];
+    const FIVE_MINUTES = 5 * 60 * 1000;
+    const cachedItem = cache[endpoint];
+
+    if (cachedItem && !skipCache) {
+      const isExpired = Date.now() - cachedItem.fetchedAt > FIVE_MINUTES;
+
+      if (!isExpired) {
+        console.log(`⚡ Fetching from Cache for: ${endpoint}`);
+        setData(cachedItem.data);
+        setError(null);
+        return cachedItem.data;
+      } else {
+        console.log(
+          `⏳ Cache expired for: ${endpoint}. Fetching fresh data...`,
+        );
+        delete cache[endpoint];
+      }
     }
 
     setLoading(true);
@@ -26,19 +38,20 @@ export const useGitHubAPI = () => {
         headers: TOKEN ? { Authorization: `token ${TOKEN}` } : {},
       });
 
-      cache[endpoint] = response.data;
-      setData(response.data);
+      cache[endpoint] = {
+        data: response.data,
+        fetchedAt: Date.now(),
+      };
 
+      setData(response.data);
       return response.data;
     } catch (err) {
       const errorMessage =
         err.response?.status === 404
-          ? "❌ User not found (404)"
+          ? "User or repository not found"
           : err.response?.status === 403
-            ? "⚠️ Rate limit exceeded - try again later"
-            : err.response?.status === 401
-              ? "🔐 Invalid token"
-              : err.message || "Network error";
+            ? "Rate limit exceeded"
+            : err.message;
 
       setError(errorMessage);
       setData(null);
