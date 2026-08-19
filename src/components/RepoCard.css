@@ -1,0 +1,106 @@
+.repo-card {
+  background: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.repo-card:hover {
+  border-color: #0366d6;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.repo-name {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.repo-link {
+  color: #0366d6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.repo-link:hover {
+  color: #0256b8;
+  text-decoration: underline;
+}
+
+.repo-description {
+  font-size: 13px;
+  color: #6a737d;
+  margin: 8px 0 10px 0;
+  line-height: 1.5;
+}
+
+.repo-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #6a737d;
+  flex-wrap: wrap;
+}
+
+.repo-language {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #f1e05a;
+  display: inline-block;
+}
+
+.repo-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.repo-updated {
+  font-size: 12px;
+  color: #959da5;
+  margin: 0;
+}
+
+.repo-size {
+  font-size: 12px;
+  color: #959da5;
+  margin: 4px 0 0 0;
+}
+
+@media (max-width: 600px) {
+  .repo-card {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+
+  .repo-name {
+    font-size: 15px;
+  }
+
+  .repo-description {
+    font-size: 12px;
+  }
+
+  .repo-meta {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .repo-card:hover {
+    transform: translateY(-1px);
+  }
+}
