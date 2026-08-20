@@ -1,4 +1,15 @@
+import { useState, useMemo } from "react";
+
 export const RepoList = ({ repos, loading, error }) => {
+  const [sortBy, setSortBy] = useState("stars");
+  const [filterLanguage, setFilterLanguage] = useState("all");
+  const languages = useMemo(() => {
+    if (!repos || repos.length === 0) return [];
+
+    const langs = new Set(repos.map((repo) => repo.language).filter(Boolean));
+    return Array.from(langs).sort();
+  }, [repos]);
+
   if (loading) {
     return (
       <div className="repo-list-container">
