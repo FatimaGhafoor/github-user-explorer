@@ -10,6 +10,29 @@ export const RepoList = ({ repos, loading, error }) => {
     return Array.from(langs).sort();
   }, [repos]);
 
+  const processedRepos = useMemo(() => {
+    if (!repos || repos.length === 0) return [];
+
+    let filtered = repos;
+    if (filterLanguage !== "all") {
+      filtered = repos.filter((repo) => repo.language === filterLanguage);
+    }
+
+    const sorted = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case "stars":
+          return b.stargazers_count - a.stargazers_count;
+        case "forks":
+          return b.forks_count - a.forks_count;
+        case "updated":
+          return new Date(b.updated_at) - new Date(a.updated_at);
+        default:
+          return 0;
+      }
+    });
+    return sorted;
+  }, [repos, sortBy, filterLanguage]);
+
   if (loading) {
     return (
       <div className="repo-list-container">
