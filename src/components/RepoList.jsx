@@ -38,6 +38,11 @@ export const RepoList = ({ repos, loading, error }) => {
     return sorted;
   }, [repos, sortBy, filterLanguage]);
 
+  const totalPages = Math.ceil(processedRepos.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedRepos = processedRepos.slice(startIndex, endIndex);
+
   if (loading) {
     return (
       <div className="repo-list-container">
