@@ -257,3 +257,124 @@
     font-size: 11px;
   }
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 24px 0;
+  border-top: 1px solid #e1e4e8;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 10px 16px;
+  background: white;
+  color: #0366d6;
+  border: 1px solid #0366d6;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #0366d6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(3, 102, 214, 0.3);
+  transform: translateY(-2px);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #d1d5da;
+  color: #6a737d;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-number {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: white;
+  color: #0366d6;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.pagination-number:hover:not(.active) {
+  border-color: #0366d6;
+  background: #f0f7ff;
+  color: #0366d6;
+}
+
+.pagination-number.active {
+  background: #0366d6;
+  color: white;
+  border-color: #0366d6;
+  box-shadow: 0 2px 8px rgba(3, 102, 214, 0.3);
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    margin-top: 24px;
+    padding: 20px 0;
+    gap: 10px;
+  }
+
+  .pagination-btn {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+
+  .pagination-number {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .pagination-numbers {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pagination {
+    margin-top: 20px;
+    padding: 16px 0;
+    gap: 8px;
+  }
+
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .pagination-number {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .pagination-numbers {
+    gap: 4px;
+  }
+}
