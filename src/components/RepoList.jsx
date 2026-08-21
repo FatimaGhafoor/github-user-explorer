@@ -6,7 +6,7 @@ export const RepoList = ({ repos, loading, error }) => {
   const [sortBy, setSortBy] = useState("stars");
   const [filterLanguage, setFilterLanguage] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   const languages = useMemo(() => {
     if (!repos || repos.length === 0) return [];
@@ -66,7 +66,7 @@ export const RepoList = ({ repos, loading, error }) => {
     setSortBy(value);
     setCurrentPage(1);
   };
-  
+
   const handleLanguageChange = (value) => {
     setFilterLanguage(value);
     setCurrentPage(1);
@@ -115,7 +115,7 @@ export const RepoList = ({ repos, loading, error }) => {
           <select
             id="sort-select"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
+            onChange={(e) => handleSortChange(e.target.value)}
             className="control-select"
           >
             <option value="stars">⭐ Most Stars</option>
@@ -129,7 +129,7 @@ export const RepoList = ({ repos, loading, error }) => {
           <select
             id="language-select"
             value={filterLanguage}
-            onChange={(e) => setFilterLanguage(e.target.value)}
+            onChange={(e) => handleLanguageChange(e.target.value)}
             className="control-select"
           >
             <option value="all">All Languages</option>
@@ -143,18 +143,53 @@ export const RepoList = ({ repos, loading, error }) => {
       </div>
 
       <div className="repo-count">
-        Showing {processedRepos.length} of {repos.length} repositories
+        Showing {paginatedRepos.length} of {processedRepos.length} repositories
+        {filterLanguage !== "all" && ` (filtered by ${filterLanguage})`}
       </div>
 
       <div className="repo-list">
-        {processedRepos.length > 0 ? (
-          processedRepos.map((repo) => <RepoCard key={repo.id} repo={repo} />)
+        {paginatedRepos.length > 0 ? (
+          paginatedRepos.map((repo) => <RepoCard key={repo.id} repo={repo} />)
         ) : (
           <div className="no-results">
             <p>No repositories match your filters</p>
           </div>
         )}
       </div>
+
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="pagination-btn"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            ← Previous
+          </button>
+
+          <div className="pagination-numbers">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (pageNum) => (
+                <button
+                  key={pageNum}
+                  className={`pagination-number ${currentPage === pageNum ? "active" : ""}`}
+                  onClick={() => handlePageClick(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ),
+            )}
+          </div>
+
+          <button
+            className="pagination-btn"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next →
+          </button>
+        </div>
+      )}
     </div>
   );
 };
