@@ -1,3 +1,4 @@
+import "./RepoCard.css";
 export const RepoCard = ({ repo }) => {
   return (
     <div className="repo-card">
