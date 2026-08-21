@@ -62,5 +62,58 @@ export const RepoList = ({ repos, loading, error }) => {
     );
   }
 
-  return <div>Repo List Component Connected!</div>;
+  return (
+    <div className="repo-list-container">
+      <div className="repo-list-header">
+        <h2>Public Repositories ({repos.length})</h2>
+      </div>
+
+      <div className="repo-controls">
+        <div className="control-group">
+          <label htmlFor="sort-select">Sort by:</label>
+          <select
+            id="sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="control-select"
+          >
+            <option value="stars">⭐ Most Stars</option>
+            <option value="forks">🍴 Most Forks</option>
+            <option value="updated">📅 Recently Updated</option>
+          </select>
+        </div>
+
+        <div className="control-group">
+          <label htmlFor="language-select">Language:</label>
+          <select
+            id="language-select"
+            value={filterLanguage}
+            onChange={(e) => setFilterLanguage(e.target.value)}
+            className="control-select"
+          >
+            <option value="all">All Languages</option>
+            {languages.map((lang) => (
+              <option key={lang} value={lang}>
+                {lang}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="repo-count">
+        Showing {processedRepos.length} of {repos.length} repositories
+      </div>
+
+      <div className="repo-list">
+        {processedRepos.length > 0 ? (
+          processedRepos.map((repo) => <RepoCard key={repo.id} repo={repo} />)
+        ) : (
+          <div className="no-results">
+            <p>No repositories match your filters</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
