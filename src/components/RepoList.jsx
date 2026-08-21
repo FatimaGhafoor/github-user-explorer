@@ -1,11 +1,13 @@
 import { useState, useMemo } from "react";
+import { RepoCard } from "./RepoCard";
+import "./RepoList.css";
 
 export const RepoList = ({ repos, loading, error }) => {
   const [sortBy, setSortBy] = useState("stars");
   const [filterLanguage, setFilterLanguage] = useState("all");
+
   const languages = useMemo(() => {
     if (!repos || repos.length === 0) return [];
-
     const langs = new Set(repos.map((repo) => repo.language).filter(Boolean));
     return Array.from(langs).sort();
   }, [repos]);
@@ -30,6 +32,7 @@ export const RepoList = ({ repos, loading, error }) => {
           return 0;
       }
     });
+
     return sorted;
   }, [repos, sortBy, filterLanguage]);
 
@@ -43,6 +46,7 @@ export const RepoList = ({ repos, loading, error }) => {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="repo-list-container">
@@ -52,6 +56,7 @@ export const RepoList = ({ repos, loading, error }) => {
       </div>
     );
   }
+
   if (!repos || repos.length === 0) {
     return (
       <div className="repo-list-container">
