@@ -49,14 +49,26 @@ export const RepoList = ({ repos, loading, error }) => {
       window.scrollTo(0, 0);
     }
   };
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       window.scrollTo(0, 0);
     }
   };
-  const handleSortPage = () => {
+
+  const handlePageClick = (pageNum) => {
+    setCurrentPage(pageNum);
+    window.scrollTo(0, 0);
+  };
+
+  const handleSortChange = (value) => {
     setSortBy(value);
+    setCurrentPage(1);
+  };
+  
+  const handleLanguageChange = (value) => {
+    setFilterLanguage(value);
     setCurrentPage(1);
   };
 
