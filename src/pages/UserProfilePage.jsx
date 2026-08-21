@@ -7,14 +7,12 @@ import "../styles/UserProfilePage.css";
 export const UserProfilePage = () => {
   const { username } = useParams();
   const navigate = useNavigate();
-
   const {
     data: userData,
     loading: userLoading,
     error: userError,
     fetchData: fetchUserData,
   } = useGitHubAPI();
-
   const {
     data: repos,
     loading: reposLoading,
