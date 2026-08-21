@@ -5,6 +5,8 @@ import "./RepoList.css";
 export const RepoList = ({ repos, loading, error }) => {
   const [sortBy, setSortBy] = useState("stars");
   const [filterLanguage, setFilterLanguage] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const languages = useMemo(() => {
     if (!repos || repos.length === 0) return [];
