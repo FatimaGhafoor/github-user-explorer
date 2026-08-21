@@ -43,6 +43,23 @@ export const RepoList = ({ repos, loading, error }) => {
   const endIndex = startIndex + itemsPerPage;
   const paginatedRepos = processedRepos.slice(startIndex, endIndex);
 
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  };
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  };
+  const handleSortPage = () => {
+    setSortBy(value);
+    setCurrentPage(1);
+  };
+
   if (loading) {
     return (
       <div className="repo-list-container">
