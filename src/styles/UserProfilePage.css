@@ -131,6 +131,7 @@
   margin-bottom: 32px;
   border-bottom: 1px solid #e1e4e8;
   padding-bottom: 24px;
+  min-height: 140px;
 }
 
 .user-info h1 {
