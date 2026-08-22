@@ -131,7 +131,7 @@
   margin-bottom: 32px;
   border-bottom: 1px solid #e1e4e8;
   padding-bottom: 24px;
-  min-height: 140px;
+  min-height: 100px;
 }
 
 .user-info h1 {
@@ -146,6 +146,10 @@
   color: #666;
   margin: 12px 0;
   line-height: 1.5;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-location,
@@ -153,6 +157,7 @@
   font-size: 14px;
   color: #6a737d;
   margin: 8px 0;
+  min-height: 20px;
 }
 
 .user-link {
